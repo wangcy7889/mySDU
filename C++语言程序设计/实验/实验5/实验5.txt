@@ -1,0 +1,120 @@
+实验四、 类与对象应用（二）
+
+实验目的：
+1. 掌握类组合应用
+2. 了解struct在C++中的扩展
+3. 了解联合体的本质与应用
+4. 了解位域
+5. 掌握类的综合应用
+
+实验内容：
+参照《C++语言程序设计》学生用书，完成以下实验：
+--第4章 实验4  类与对象--
+1. 设计一个用于人事管理的People类。要求包括：构造、复制构造和析构函数、内联成员函数、带默认形参值的成员函数、类的组合。（即习题4-10）
+
+2. 给第4章PPT中的例4-4程序(如下所示)加入Line和Point类的析构函数（含输出信息），分析程序运行结果。
+//4_4.cpp
+#include <iostream>
+#include <cmath>
+using namespace std;
+class Point {	//Point类定义
+public:
+	Point(int xx = 0, int yy = 0) {
+		x = xx;
+		y = yy;
+	}
+	Point(Point &p);
+	int getX() { return x; }
+	int getY() { return y; }
+private:
+	int x, y;
+};
+Point::Point(Point &p) {	//复制构造函数的实现
+	x = p.x;
+	y = p.y;
+	cout << "Calling the copy constructor of Point" << endl;
+}
+//类的组合
+class Line {	//Line类的定义
+public:	//外部接口
+	Line(Point xp1, Point xp2);
+	Line(Line &l);
+	double getLen() { return len; }
+private:	//私有数据成员
+	Point p1, p2;	//Point类的对象p1,p2
+	double len;
+};
+//组合类的构造函数实现
+Line::Line(Point xp1, Point xp2) : p1(xp1), p2(xp2){
+	p1 = xp1;
+	p2 = xp2;
+	cout << "Calling constructor of Line" << endl;
+	double x = static_cast<double>(p1.getX() - p2.getX());
+	double y = static_cast<double>(p1.getY() - p2.getY());
+	len = sqrt(x * x + y * y);
+}
+Line::Line (Line &l): p1(l.p1), p2(l.p2) {//组合类的复制构造函数
+	cout << "Calling the copy constructor of Line" << endl;
+	len = l.len;
+}
+
+//主函数
+int main() {
+	Point myp1(1, 1), myp2(4, 5);	//建立Point类的对象
+	Line line(myp1, myp2);	//建立Line类的对象
+	Line line2(line);	//利用复制构造函数建立一个新对象
+	cout << "The length of the line is: ";
+	cout << line.getLen() << endl;
+	cout << "The length of the line2 is: ";
+	cout << line2.getLen() << endl;
+	return 0;
+}
+
+3. 将以下代码放入test.c文件内，是否能够正常编译？在Student中增加private 成员，还能否正常编译？
+#include <stdio.h>
+
+struct Student {	//学生信息结构体
+	int num;		//学号
+	const char *name;	//姓名，字符串对象，将在第6章详细介绍
+	char sex;		//性别
+	int age;		//年龄
+};
+
+int main() {
+	Student stu = { 97001, "Lin Lin", 'F', 19 };
+	printf("Num:  %d\n",stu.num);
+	printf("Num:  %s\n",stu.name);
+	printf("Num:  %c\n",stu.sex);
+	printf("Num:  %d\n",stu.age);
+	return 0;
+}
+
+4. 对比union文件夹中的代码有什么不同？解释代码与运行结果的不同点。
+
+5. 第4章习题4-19 拓展练习：位域。通过改变各个成员需要的bit数看看对于最后sizeof的值有什么影响，发现了什么规律。
+
+5. 运行并分析以下代码的运行结果。
+
+#include <iostream>
+using namespace std;
+
+class A {
+public: 
+    int a;
+};
+
+union U {
+    A a;
+    double d;
+};
+
+int main() {
+    U u;
+	A a;
+	a.a = 1;
+    u.a = a;
+    u.d = 1.0;
+    cout << u.a.a << endl;
+    cout << u.d << endl;
+    return 0;
+}

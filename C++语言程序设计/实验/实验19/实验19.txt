@@ -1,0 +1,59 @@
+实验19：综合实验1
+
+1. 手动实现一个MyOStream类，该类可以实现如下功能。
+
+1）该类支持使用<<运算符打印char、int、float、double、string等基本类型。重载函数中可以使用printf函数对相应数据进行打印。
+2）该类支持自定义打印前缀的功能，默认打印前缀为空字符串，之后每次打印都会先打印前缀后打印给定的数据。
+3）设置打印前缀只对下一次的打印有效，之后恢复成空字符串。
+4）通过prefix(string np)成员函数可以将前缀设置为np。
+5）也可以通过setPrefix(string np)函数在输出流中设置（可以用一个非成员setPrefix函数返回包含配置信息的一个特殊对象，让MyOStream类重载<<调用对应该配置类时完成设置工作）。
+
+参考main函数：
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main(){
+	int a = 15;
+	float f = 20.356;
+	char ch = 't';
+	MyOStream mout;
+	mout<<"hello world"<<'\n';
+	mout<<setPrefix("myprefix:")<<a<<'\n';
+	mout<<f<<'\n';
+	mout.prefix("new prefix:");
+	mout<<ch<<'\n';
+}
+
+参考输出：
+hello world
+myprefix:15
+20.356001
+new prefix:t
+
+2. 手动实现一个my_auto_ptr类。实现12章PPT介绍的auto_ptr给出的get() release() reset()功能。重载*操作符。
+参考main函数：
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Test{
+public:
+	Test(){
+		cout<<"Test constructed"<<endl;
+	}
+	~Test(){
+		cout<<"Test deconstructed"<<endl;
+	}
+};
+
+int main(){
+	my_auto_ptr<Test>(new Test());
+}
+
+参考输出：
+Test constructed
+Test deconstructed

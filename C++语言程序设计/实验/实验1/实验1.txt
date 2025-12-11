@@ -1,0 +1,65 @@
+实验一、 C++开发环境与简单程序设计
+实验目的：
+1. 熟悉C++开发环境，能编写、调试程序，配置编译器。
+2. 练习简单的C++程序设计，熟悉C++语法特点，掌握程序调试方法。
+
+要求：
+  下载实验报告模板，完成以下实验内容，最后填写实验报告，以学号-姓名-实验几命名（如：20210013011-张三-实验一）上传至学校云盘 https://icloud.qd.sdu.edu.cn:7777/#/link/CF8058E80DC0B55AD1C14F5157813E5B 访问密码：lEAp
+相应实验室文件夹中。注意班级名只填写4/5/6中的一个 补修同学分配到6班进行实验
+
+实验内容：本次实验包括以下内容：
+参照《C++语言程序设计》学生用书，完成以下实验：
+
+第1章 实验1 C++开发环境应用入门
+1. 练习在几种不同编译环境下，总结它们各自的特点和不同。
+如：DEV-CPP, VS Code, VC，Clion等IDE中的两种或以上，体验它们的不同。 
+
+https://www.bloodshed.net/ DEV C++
+https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSLandingPage&cid=2030&passive=false Visual Studio Community版本
+https://code.visualstudio.com/ VS Code
+https://www.jetbrains.com/ 包含Clion等Jetbrains全家桶 但是没有适合我们的免费版本 教育版本需要.edu结尾的邮箱 私下用比较推荐
+https://www.eclipse.org/downloads/packages/release/kepler/sr2/eclipse-ide-cc-developers eclipse也有C开发版本 
+
+在IDE中运行下列两段代码，截屏运行结果并解释。
+//代码1
+#include <stdio.h>
+int main()
+{
+	int x=-1,z=2147483647;
+	unsigned int y=x;   
+
+	printf("x=%d,y=%u z=%d\n",x,y,z+1); 
+}   
+
+//代码2
+#include <iostream>
+using namespace std;
+int main(){
+	int a=0,b=0;
+	cout<<"1 "<<"2 "<<"3 "<<endl;
+	cout<<b++<<" "<<b++<<" "<<b++<<endl;
+	cout<<++a<<" "<<++a<<" "<<++a<<endl;  
+	return 0; 
+}
+
+2.了解不同的编译器
+http://gcc.gnu.org/   GCC
+https://jmeubank.github.io/tdm-gcc/download/    tdm-gcc
+https://clang.llvm.org/ clang
+
+*本项目将主要结合DEV C++进行讲解。如果有自己比较熟悉的IDE，也可以用自己喜欢的。DEV有的所有功能，其他IDE应该也都支持。请先提供的根据devc++教程的教程学习运行与调试程序。
+
+3.学会配置 Dev C++编译选项：
+
+#include <iostream>
+using namespace std;
+
+int main() {
+#ifdef TENG
+	cout<<"teng"<<endl;
+#else
+	cout<<"no teng"<<endl;
+#endif
+	return 0;
+}
+运行上述代码，对输出结果进行截屏。之后在"工具"/"编译选项"/"编译"框加入-DTENG，并勾选"编译时加入以下选项"。点击全部重新编译或按F12键，再重新编译运行，查看输出结果并截屏。为什么改变编译选项也可以改变程序的运行结果？
